@@ -1,0 +1,26 @@
+<!-- index.html.erb -->
+<h1>Topics</h1>
+
+<table>
+	<tr>
+		<td>Title</td>
+		<td>Description</td>
+	</tr>
+	<% @topics.each do |topic| %>
+		<tr>
+			<td><%= topic.title %></td>
+			<td><%= topic.description %></td>
+			<td><%= button_to "+1", "/topics/#{topic.id}/vote" %></td>
+			<td>
+				<%= button_to "-1", "/topics/#{topic.id}/downvote", method: :delete if topic.votes.any? %>
+			</td>
+			<td><%= pluralize(topic.votes.count, 'vote') %></td>
+			<td><%= link_to "Show", topic_path(topic.id) %></td>
+			<td><%= link_to "Edit", "#" %></td>
+			<td><%= link_to "Delete", topic_path(topic.id),
+										method: :delete%></td>
+		</tr>
+	<% end %>
+</table>
+
+<%= link_to "Create Topic", new_topic_path %>
